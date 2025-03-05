@@ -1,7 +1,8 @@
 from langchain_google_genai import ChatGoogleGenerativeAI
-from typing import TypedDict
+from typing import TypedDict,Annotated,Literal,Optional
 from dotenv import load_dotenv
 from pydantic import BaseModel
+
 
 load_dotenv()
 
@@ -9,9 +10,14 @@ model = ChatGoogleGenerativeAI(model = "gemini-2.0-flash")
 
 # schema
 
-class review(TypedDict):
-    summary: str
-    sentiment: str
+class review(BaseModel):
+
+    keys = Annotated[list[str],"key_themes"]
+    summary: Annotated[str, "A brief summary of the review"]
+    sentiment: Annotated[str,"return sentiment either negative or positive"]
+    pros: Annotated[Optional[list[str]],"write pros of review"]
+    cons: Annotated[Optional[list[str]],"write cons of review"]
+
 
 
 struc_model = model.with_structured_output(review)
