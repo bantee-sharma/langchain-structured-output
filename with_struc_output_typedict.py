@@ -1,26 +1,20 @@
 from langchain_google_genai import ChatGoogleGenerativeAI
-from typing import TypedDict,Annotated,Literal,Optional
+from typing import TypedDict
 from dotenv import load_dotenv
-from pydantic import BaseModel
-
 
 load_dotenv()
 
 model = ChatGoogleGenerativeAI(model = "gemini-2.0-flash")
 
-# schema
+# Schema
 
-class review(BaseModel):
-
-    keys = Annotated[list[str],"key_themes"]
-    summary: Annotated[str, "A brief summary of the review"]
-    sentiment: Annotated[str,"return sentiment either negative or positive"]
-    pros: Annotated[Optional[list[str]],"write pros of review"]
-    cons: Annotated[Optional[list[str]],"write cons of review"]
-
-
+class review(TypedDict):
+    
+    summary:str
+    sentiment:str
 
 struc_model = model.with_structured_output(review)
+
 
 res = struc_model.invoke("""Upgraded to the 16 from my 12 and it is a great phone. The Ultramarine Blue looks and feels sooo good. The photos don't do enough justice to this variant.
 
