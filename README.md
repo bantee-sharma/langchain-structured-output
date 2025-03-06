@@ -1,2 +1,2 @@
-# langchain-structured-output
+# Langchain-structured-output
  
