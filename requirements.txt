@@ -13,3 +13,4 @@ numpy
 
 typedict
 pydantic
+pydantic[email]
